@@ -5,6 +5,7 @@ const UserSchema=Schema({
     Email:{type:String,required:true},
     Password:{type:String,required:true},
     PhoneNumber:{type:Number,required:true},
+    Adress:{type:mongoose.Schema.Types.ObjectId},
     ProfilePic:{type:String,required:true},
     SocialProfile:{type:mongoose.Schema.Types.ObjectId},
     OverallRating:{type:mongoose.Schema.Types.Decimal128,required:true},

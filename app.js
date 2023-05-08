@@ -1,14 +1,14 @@
 const express=require('express')
 const cors=require('cors')
 const Schema=require('./Schema/Schema')
-const {createHandler}=require('graphql-http')
+const {graphqlHTTP}= require('express-graphql');
 const app=express()
-
-app.use('/graphql',createHandler({
+app.use(cors())
+app.use(express.json())
+app.use('/graphql',graphqlHTTP({
     schema:Schema,
     graphiql:true
 
 }))
-app.use(cors())
-app.use(express.json())
+
 module.exports=app

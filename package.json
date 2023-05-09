@@ -1,13 +1,16 @@
 {
   "dependencies": {
+    "cloudinary": "^1.36.4",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
     "graphql": "^16.6.0",
     "graphql-http": "^1.18.0",
+    "mongodb": "^5.4.0",
     "mongoose": "^7.0.5",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "streamifier": "^0.1.1"
   },
   "scripts": {
     "start": "node server.js",

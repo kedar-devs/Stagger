@@ -1,5 +1,5 @@
 const graphql=require('graphql')
-const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat}=graphql
+const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList}=graphql
 const User=require('./../Models/User/User.model')
 const Rating=require('./../Models/User/Rating.model')
 const UserType=new GraphQLObjectType({
@@ -9,6 +9,12 @@ const UserType=new GraphQLObjectType({
         Name:{type:GraphQLString},
         Email:{type:GraphQLString},
         ProfilePic:{type:GraphQLString},  
+        Rating:{
+            type:GraphQLList(RatingType),
+            resolve(parents,args){
+                return Rating.findOne({RatedTo:parents.Rating})
+            }
+        }
     })
 })
 const RatingType=new GraphQLObjectType({
@@ -37,10 +43,35 @@ const RootQuery=new GraphQLObjectType({
             resolve(parents,args){
                 return Rating.findOne({_id:id})
             }
+        },
+        users:{
+            type:GraphQLList(UserType),
+            resolve(parents,args){
+                return User.find()
+            }
+        }
+    }
+})
+
+const Mutation=new GraphQLObjectType({
+    name:'mutation',
+    fields:{
+        addUser:{
+            type:UserType,
+            args:{
+                Name:{type:GraphQLString},
+                Email:{type:GraphQLString},
+                ProfilePic:{type:GraphQLString}, 
+
+            },
+            resolve(parents,args){
+                
+            }
         }
     }
 })
 
 module.exports=new GraphQLSchema({
-    query:RootQuery
+    query:RootQuery,
+    mutation:Mutation
 })

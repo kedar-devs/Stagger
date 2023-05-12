@@ -1,6 +1,7 @@
 const graphql=require('graphql')
-const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList}=graphql
+const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,GraphQLInt}=graphql
 const User=require('./../Models/User/User.model')
+const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
 const UserType=new GraphQLObjectType({
     name:"User",
@@ -10,7 +11,7 @@ const UserType=new GraphQLObjectType({
         Email:{type:GraphQLString},
         ProfilePic:{type:GraphQLString},  
         Rating:{
-            type:GraphQLList(RatingType),
+            type:new GraphQLList(RatingType),
             resolve(parents,args){
                 return Rating.findOne({RatedTo:parents.Rating})
             }
@@ -45,7 +46,7 @@ const RootQuery=new GraphQLObjectType({
             }
         },
         users:{
-            type:GraphQLList(UserType),
+            type:new GraphQLList(UserType),
             resolve(parents,args){
                 return User.find()
             }
@@ -61,11 +62,13 @@ const Mutation=new GraphQLObjectType({
             args:{
                 Name:{type:GraphQLString},
                 Email:{type:GraphQLString},
-                ProfilePic:{type:GraphQLString}, 
+                Password:{type:GraphQLString},
+                PhoneNumber:{type:graphql.GraphQLInt},
+                ProfilePic:{type:GraphQLUpload}, 
 
             },
             resolve(parents,args){
-                
+                console.log(args)
             }
         }
     }

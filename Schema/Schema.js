@@ -1,5 +1,6 @@
 const graphql=require('graphql')
 const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,GraphQLInt}=graphql
+const {AddUser}=require('./../Controller/User.controller')
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
@@ -63,12 +64,11 @@ const Mutation=new GraphQLObjectType({
                 Name:{type:GraphQLString},
                 Email:{type:GraphQLString},
                 Password:{type:GraphQLString},
-                PhoneNumber:{type:graphql.GraphQLInt},
-                ProfilePic:{type:GraphQLUpload}, 
+                PhoneNumber:{type:graphql.GraphQLString},
 
             },
             resolve(parents,args){
-                console.log(args)
+                return AddUser(args)
             }
         }
     }

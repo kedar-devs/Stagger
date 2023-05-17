@@ -4,6 +4,7 @@ const {AddUser}=require('./../Controller/User.controller')
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
+const AddressModal = require('../Models/User/Address.model')
 const UserType=new GraphQLObjectType({
     name:"User",
     fields:()=>({
@@ -17,6 +18,16 @@ const UserType=new GraphQLObjectType({
                 return Rating.findOne({RatedTo:parents.Rating})
             }
         }
+    })
+})
+const AddressType=new GraphQLObjectType({
+    name:'Address',
+    fields:()=>({
+        id:{type:GraphQLString},
+        Address:{type:GraphQLString},
+        City:{type:GraphQLString},
+        State:{type:GraphQLString},
+        Coordinates:{type:GraphQLString},
     })
 })
 const RatingType=new GraphQLObjectType({
@@ -39,6 +50,13 @@ const RootQuery=new GraphQLObjectType({
            return User.findOne({_id:id}) 
         }
         },
+        address:{
+            type:AddressType,
+            args:{id:{type:GraphQLString}},
+            resolve(parents,args){
+                return AddressModal.findOne({_id:id})
+            }
+   },
         rating:{
             type:RatingType,
             args:{id:{type:GraphQLString}},
@@ -69,6 +87,18 @@ const Mutation=new GraphQLObjectType({
             },
             resolve(parents,args){
                 return AddUser(args)
+            }
+        },
+        addAddress:{
+            type:AddressType,
+            args:{
+                Address:{type:GraphQLString},
+                City:{type:GraphQLString},
+                State:{type:GraphQLString},
+                Coordinates:{type:GraphQLString},
+            },
+            resolve(parents,args){
+                return AddAddress(args)
             }
         }
     }

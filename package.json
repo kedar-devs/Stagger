@@ -12,6 +12,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.4.0",
     "mongoose": "^7.0.5",
+    "node-geocoder": "^4.2.0",
     "nodemon": "^2.0.22",
     "streamifier": "^0.1.1"
   },

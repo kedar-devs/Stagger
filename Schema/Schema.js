@@ -1,6 +1,7 @@
 const graphql=require('graphql')
 const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,GraphQLInt}=graphql
 const {AddUser}=require('./../Controller/User.controller')
+const {AddAdress}=require('./../Controller/Adress.controller')
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
@@ -94,11 +95,10 @@ const Mutation=new GraphQLObjectType({
             args:{
                 Address:{type:GraphQLString},
                 City:{type:GraphQLString},
-                State:{type:GraphQLString},
-                Coordinates:{type:GraphQLString},
+                State:{type:GraphQLString}
             },
             resolve(parents,args){
-                return AddAddress(args)
+                return AddAdress(args)
             }
         }
     }

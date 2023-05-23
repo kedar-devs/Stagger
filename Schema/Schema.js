@@ -2,6 +2,7 @@ const graphql=require('graphql')
 const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,GraphQLInt}=graphql
 const {AddUser}=require('./../Controller/User.controller')
 const {AddAdress}=require('./../Controller/Adress.controller')
+const {AddReview}=require('./../Controller/Rating.Controller')
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
@@ -12,7 +13,8 @@ const UserType=new GraphQLObjectType({
         id:{type:GraphQLString},
         Name:{type:GraphQLString},
         Email:{type:GraphQLString},
-        ProfilePic:{type:GraphQLString},  
+        ProfilePic:{type:GraphQLString},
+        accessToken:{type:GraphQLString}, 
         Rating:{
             type:new GraphQLList(RatingType),
             resolve(parents,args){
@@ -35,7 +37,7 @@ const RatingType=new GraphQLObjectType({
     name:"Rating",
     fields:()=>({
         id:{type:GraphQLString},
-        Review:{type:GraphQLString},
+        Comment:{type:GraphQLString},
         RatedBy:{type:GraphQLString},
         RatedTo:{type:GraphQLString},
         Rating:{type:GraphQLFloat}, 
@@ -93,6 +95,7 @@ const Mutation=new GraphQLObjectType({
         addAddress:{
             type:AddressType,
             args:{
+                AccessToken:{type:GraphQLString},
                 Address:{type:GraphQLString},
                 City:{type:GraphQLString},
                 State:{type:GraphQLString}
@@ -100,6 +103,18 @@ const Mutation=new GraphQLObjectType({
             resolve(parents,args){
                 return AddAdress(args)
             }
+        },
+        addRating:{
+            type:RatingType,
+            args:{
+                RatingTo:{type:GraphQLString},
+                RatedBy:{type:GraphQLString},
+                rating:{type:GraphQLFloat},
+                Comment:{type:GraphQLString}
+            },
+           resolve(parents,args){
+            return AddReview(args)
+           } 
         }
     }
 })

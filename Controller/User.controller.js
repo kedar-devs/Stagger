@@ -13,8 +13,8 @@ exports.AddUser=async(data)=>{
     if(!hash){
         return {message:"Error while creating encryption for the password"}
     }
-    const accessToken=jwt.sign({subject:hash},process.env.SECRET_KEY,{ algorithm: 'RS256' })
-    const resetToken=jwt.sign({subject:new ObjectId()},process.env.SECRET_KEY,{ algorithm: 'RS256' })
+    const accessToken=jwt.sign({subject:hash},process.env.SECRET_KEY)
+    const resetToken=jwt.sign({subject:new ObjectId()},process.env.SECRET_KEY)
     // const Pp=data.files.Pp
     // const Url=await FileUpload.UploadImage(Pp)
 

@@ -9,7 +9,8 @@ const UserSchema=Schema({
     ProfilePic:{type:String,required:true},
     SocialProfile:{type:mongoose.Schema.Types.ObjectId},
     OverallRating:{type:mongoose.Schema.Types.Decimal128,required:true},
-    Rating:{type:mongoose.Schema.Types.ObjectId,required:true},
+    OverallRatingCount:{type:Number,required:true},
+    Rating:{type:[mongoose.Schema.Types.ObjectId],required:true},
     accessToken:{type:String,required:true},
     resetToken:{type:String,required:true}
 })

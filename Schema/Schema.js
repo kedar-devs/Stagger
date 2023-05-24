@@ -2,7 +2,7 @@ const graphql=require('graphql')
 const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,GraphQLInt}=graphql
 const {AddUser}=require('./../Controller/User.controller')
 const {AddAdress}=require('./../Controller/Adress.controller')
-const {AddReview}=require('./../Controller/Rating.Controller')
+const {AddRating}=require('./../Controller/Rating.Controller')
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
@@ -109,11 +109,11 @@ const Mutation=new GraphQLObjectType({
             args:{
                 RatingTo:{type:GraphQLString},
                 RatedBy:{type:GraphQLString},
-                rating:{type:GraphQLFloat},
+                Rating:{type:GraphQLFloat},
                 Comment:{type:GraphQLString}
             },
            resolve(parents,args){
-            return AddReview(args)
+            return AddRating(args)
            } 
         }
     }

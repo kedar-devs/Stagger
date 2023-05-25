@@ -26,7 +26,8 @@ exports.AddUser=async(data)=>{
      ProfilePic:' ',
      SocialProfile:new ObjectId(),
      OverallRating:0.00,
-     Rating:new ObjectId(),
+     OverallRatingCount:0,
+     Rating:[new ObjectId()],
      Adress:new ObjectId(),
      accessToken,
      resetToken

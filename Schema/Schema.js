@@ -7,42 +7,9 @@ const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
 const AddressModal = require('../Models/User/Address.model')
-const UserType=new GraphQLObjectType({
-    name:"User",
-    fields:()=>({
-        id:{type:GraphQLString},
-        Name:{type:GraphQLString},
-        Email:{type:GraphQLString},
-        ProfilePic:{type:GraphQLString},
-        accessToken:{type:GraphQLString}, 
-        Rating:{
-            type:new GraphQLList(RatingType),
-            resolve(parents,args){
-                return Rating.findOne({RatedTo:parents.Rating})
-            }
-        }
-    })
-})
-const AddressType=new GraphQLObjectType({
-    name:'Address',
-    fields:()=>({
-        id:{type:GraphQLString},
-        Address:{type:GraphQLString},
-        City:{type:GraphQLString},
-        State:{type:GraphQLString},
-        Coordinates:{type:GraphQLString},
-    })
-})
-const RatingType=new GraphQLObjectType({
-    name:"Rating",
-    fields:()=>({
-        id:{type:GraphQLString},
-        Comment:{type:GraphQLString},
-        RatedBy:{type:GraphQLString},
-        RatedTo:{type:GraphQLString},
-        Rating:{type:GraphQLFloat}, 
-    })
-})
+const {UserType}=require('./Models/UserObjects')
+const {AddressType}=require('./Models/AdressObject')
+const {RatingType}=require('./Models/RatingObject')
 const RootQuery=new GraphQLObjectType({
     name:'RootQueryType',
     fields:{

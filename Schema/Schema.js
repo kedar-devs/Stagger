@@ -3,13 +3,17 @@ const { GraphQLSchema,GraphQLObjectType,GraphQLString,GraphQLFloat,GraphQLList,G
 const {AddUser}=require('./../Controller/User.controller')
 const {AddAdress}=require('./../Controller/Adress.controller')
 const {AddRating}=require('./../Controller/Rating.Controller')
+const {AddSocials}=require("./../Controller/Social.controller")
 const User=require('./../Models/User/User.model')
 const {GraphQLUpload}=require('graphql-upload')
 const Rating=require('./../Models/User/Rating.model')
 const AddressModal = require('../Models/User/Address.model')
+
 const {UserType}=require('./Models/UserObjects')
 const {AddressType}=require('./Models/AdressObject')
 const {RatingType}=require('./Models/RatingObject')
+const {SocialMediaType}=require('./Models/SocialMediaObject')
+const SocialMediaModal = require('../Models/User/SocialMedia.model')
 const RootQuery=new GraphQLObjectType({
     name:'RootQueryType',
     fields:{
@@ -32,6 +36,13 @@ const RootQuery=new GraphQLObjectType({
             args:{id:{type:GraphQLString}},
             resolve(parents,args){
                 return Rating.findOne({_id:id})
+            }
+        },
+        socials:{
+            type:new GraphQLList(SocialMediaType),
+            args:{id:{type:GraphQLString}},
+            resolve(parents,args){
+                return SocialMediaModal.find({ProfileId:id})
             }
         },
         users:{
@@ -82,6 +93,17 @@ const Mutation=new GraphQLObjectType({
            resolve(parents,args){
             return AddRating(args)
            } 
+        },
+        AddSocial:{
+            type:SocialMediaType,
+            args:{
+                AccessToken:{type:GraphQLString},
+                SocialName:{type:GraphQLString},
+                SocialLink:{type:GraphQLString}
+            },
+            resolve(parents,args){
+                return AddSocials(args)
+            }
         }
     }
 })

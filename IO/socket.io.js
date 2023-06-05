@@ -1,4 +1,6 @@
 const io=require('socket.io')(3000)
 io.on("connection",socket=>{
-    socket.emit("chat-message","Hello User")
+    socket.on("send-chat-message",(mssg)=>{
+        socket.broadcast.emit("chat-message",mssg)
+    })
 })
